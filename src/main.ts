@@ -1,4 +1,5 @@
 import './style.css'
+import './sass/index.sass'
 import typescriptLogo from './typescript.svg'
 import viteLogo from '/vite.svg'
 import { setupCounter } from './counter.ts'
