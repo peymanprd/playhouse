@@ -1,7 +1,7 @@
-class Calculator {
-  constructor(public element: HTMLDivElement) {}
+export class Calculator {
+  constructor(public element: HTMLElement) {}
 
   render() {
-    this.element.innerHTML = ``
+    this.element.innerHTML = `<h1>Calculator</h1>`
   }
 }

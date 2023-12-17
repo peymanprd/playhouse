@@ -1,7 +1,18 @@
 import './style.css'
 // import './sass/index.sass'
 // import { setupCounter } from './counter.ts'
+import { setupStart } from './start'
 import { ICONS } from './icons'
+import AppModules from './modules'
+
+function setupModule(el: HTMLElement) {
+  return {
+    calculator: new AppModules.Calculator(el),
+    synth: new AppModules.Synth(el),
+    tiktoktoe: new AppModules.TikTakToe(el),
+    calendar: new AppModules.Calendar(el)
+  }
+}
 
 const app = document.querySelector<HTMLDivElement>('#app')!
 // tabs link inject to app
@@ -14,7 +25,7 @@ const tabLinkNodes = tabsLink.map((tabLink) => {
   buttonEl.classList.add('tab-link')
   buttonEl.innerHTML = ICONS[<keyof typeof ICONS>tabLink]
   buttonEl.addEventListener('click', (e: Event) => {
-    console.log(tabLink, e)
+    // console.log(tabLink, e)
     setActiveTab(e, tabLink)
   })
   return buttonEl
@@ -27,11 +38,14 @@ app.appendChild(tabsContentEl)
 const tabContentNodes = tabsLink.map((tabLink) => {
   const divEl = document.createElement('div')
   divEl.setAttribute('id', tabLink)
-  divEl.textContent = `content -> ${tabLink}`
+  divEl.classList.add('tab-content')
+  divEl.style.display = 'none'
+  type SetupModuleKeys = keyof ReturnType<typeof setupModule>
+  setupModule(divEl)[<SetupModuleKeys>tabLink].render()
   return divEl
 })
 tabsContentEl.prepend(...tabContentNodes)
-//
+// set active tab
 function setActiveTab(evt: Event, tabName: string) {
   let i, tabContents, tabLinks
 
@@ -40,15 +54,23 @@ function setActiveTab(evt: Event, tabName: string) {
     ;(<HTMLElement>tabContents[i]).style.display = 'none'
   }
 
-  tabLinks = document.getElementsByClassName('tab-links')
+  tabLinks = document.getElementsByClassName('tab-link')
   for (i = 0; i < tabLinks.length; i++) {
     tabLinks[i].className = tabLinks[i].className.replace(' active', '')
   }
 
+  document.getElementById('start-tab-content')!.style.display = 'none'
   document.getElementById(tabName)!.style.display = 'block'
   if (evt.currentTarget instanceof HTMLElement) {
-    evt.currentTarget.classList.contains('active')
-      ? evt.currentTarget.classList.remove('active')
-      : (evt.currentTarget.className += ' active')
+    evt.currentTarget.className += ' active'
   }
 }
+
+const startEl = document.createElement('div')
+startEl.setAttribute('id', 'start-tab-content')
+tabsContentEl.append(startEl)
+setupStart(startEl)
+
+console.log(AppModules)
+const calculator = document.getElementById('calculator')!
+new AppModules.Calculator(calculator)
