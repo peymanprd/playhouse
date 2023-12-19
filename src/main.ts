@@ -9,7 +9,7 @@ function setupModule(el: HTMLElement) {
   return {
     calculator: new AppModules.Calculator(el),
     synth: new AppModules.Synth(el),
-    tiktoktoe: new AppModules.TikTakToe(el),
+    tiktaktoe: new AppModules.TikTakToe(el),
     calendar: new AppModules.Calendar(el)
   }
 }
