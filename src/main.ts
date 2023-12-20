@@ -19,7 +19,7 @@ const app = document.querySelector<HTMLDivElement>('#app')!
 const tabsLinkEl = document.createElement('div')
 tabsLinkEl.setAttribute('id', 'tabs-link')
 app.appendChild(tabsLinkEl)
-const tabsLink = ['calculator', 'synth', 'tiktoktoe', 'calendar']
+const tabsLink = ['calculator', 'synth', 'tiktaktoe', 'calendar']
 const tabLinkNodes = tabsLink.map((tabLink) => {
   const buttonEl = document.createElement('button')
   buttonEl.classList.add('tab-link')
